@@ -1,5 +1,9 @@
 {
   "server": {
+    "port": 80,
+    "api": {
+      "readOnly": true
+    },
     "redis": {
       "address": "${package}.redis",
       "host": "localhost",
