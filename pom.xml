@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <artifactId>tiler-aggregate</artifactId>
-    <groupId>io.tiler</groupId>
-    <version>0-SNAPSHOT</version>
-  </parent>
-
   <groupId>io.tiler</groupId>
   <artifactId>tiler-demo</artifactId>
   <packaging>jar</packaging>
   <version>0.1.0-SNAPSHOT</version>
-  <name>tiler-demo</name>
-  <description>Description of project</description>
+  <name>Tiler Demo</name>
+  <description>Tiler Demo dashboards</description>
   <url>URL for project</url>
+  <licenses>
+    <license>
+      <name>MIT</name>
+      <url>http://opensource.org/licenses/MIT</url>
+    </license>
+  </licenses>
   <developers>
     <developer>
-      <name>Developer name</name>
-      <email>Developer email address</email>
-      <organization>Organization name</organization>
-      <organizationUrl>Organization URL</organizationUrl>
+      <name>Simon Dean</name>
+      <email>simon@simondean.org</email>
+      <organization>Tiler</organization>
+      <organizationUrl>http://tiler.io</organizationUrl>
     </developer>
   </developers>
   <scm>
