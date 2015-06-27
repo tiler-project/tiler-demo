@@ -1,5 +1,5 @@
 {
-  "main": "${package}.MainVerticle",
+  "main": "io.tiler.demo.MainVerticle",
 
   "description": "Put description of your module here",
   "licenses": ["Put license name here"],
