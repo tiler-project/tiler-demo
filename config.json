@@ -1,0 +1,60 @@
+{
+  "server": {
+    "redis": {
+      "address": "${package}.redis",
+      "host": "localhost",
+      "port": 6379,
+      "keyPrefix": "${package}:"
+    }
+  },
+  "example": {
+    "metrics": [
+      {
+        "name": "random-numbers",
+        "collectionInterval": "10s",
+        "retentionPeriod": "1h",
+        "groups": [
+          {
+            "name": "One"
+          },
+          {
+            "name": "Two"
+          },
+          {
+            "name": "Three"
+          },
+          {
+            "name": "Four"
+          },
+          {
+            "name": "Five"
+          },
+          {
+            "name": "Six"
+          },
+          {
+            "name": "Seven"
+          },
+          {
+            "name": "Eight"
+          },
+          {
+            "name": "Nine"
+          },
+          {
+            "name": "Ten"
+          }
+        ],
+        "fields": [
+          {
+            "name": "value",
+            "type": "randomInt",
+            "min": 0,
+            "max": 100
+          }
+        ]
+      }
+    ],
+    "metricNamePrefix": "examples."
+  }
+}

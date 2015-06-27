@@ -1,0 +1,15 @@
+{
+  "main": "${package}.MainVerticle",
+
+  "description": "Put description of your module here",
+  "licenses": ["Put license name here"],
+  "author": "Joe Bloggs",
+
+  // Optional fields
+  "developers": ["Other Dev 1", "Other Dev 2"],
+  "keywords": ["gerbils", "cars", "cheese", "chocolate", "underpants", "herring"],
+  "homepage": "url to your project page",
+
+  "auto-redeploy": true,
+  "includes": "io.tiler~tiler~0.1.17"
+}
