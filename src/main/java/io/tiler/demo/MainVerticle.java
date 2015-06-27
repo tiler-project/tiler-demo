@@ -3,7 +3,6 @@ package io.tiler.demo;
 import org.simondean.vertx.async.Async;
 import org.simondean.vertx.async.AsyncResultHandlerWrapper;
 import org.vertx.java.core.Future;
-import org.vertx.java.core.json.JsonArray;
 import org.vertx.java.core.json.JsonObject;
 import org.vertx.java.core.logging.Logger;
 import org.vertx.java.platform.Verticle;
@@ -15,11 +14,14 @@ import java.util.Map;
 public class MainVerticle extends Verticle {
   private Logger logger;
   private Map<String, String> env;
+  private JsonObject config;
 
   public void start(final Future<Void> startedResult) {
     logger = container.logger();
     env = container.env();
-    JsonObject config = container.config();
+    config = container.config();
+
+    mergeConfigWithEnvironmentVariables();
 
     Async.series()
       .task(handler -> container.deployVerticle("io.tiler.ServerVerticle", config.getObject("server"), 1, AsyncResultHandlerWrapper.wrap(handler)))
@@ -35,16 +37,28 @@ public class MainVerticle extends Verticle {
       });
   }
 
-  private void mergeConfigWithEnvironmentVariables(JsonObject config) {
-    mergeConfigWithRedisEnvironmentVariables(config);
+  private void mergeConfigWithEnvironmentVariables() {
+    mergeServerConfigWithEnvironmentVariables();
   }
 
-  private void mergeConfigWithRedisEnvironmentVariables(JsonObject config) {
+  private void mergeServerConfigWithEnvironmentVariables() {
     JsonObject server = config.getObject("server");
 
     if (server == null) {
       logger.warn("'server' is missing from the config");
       return;
+    }
+
+    String portString = getEnvironmentVariable("PORT");
+
+    if (portString != null) {
+      logger.info("Setting server port to " + portString);
+
+      try {
+        server.putNumber("port", Integer.parseInt(portString));
+      } catch (NumberFormatException e) {
+        logger.error("Error parsing server port", e);
+      }
     }
 
     JsonObject redis = server.getObject("redis");
@@ -57,8 +71,8 @@ public class MainVerticle extends Verticle {
     String redisUrlString = getEnvironmentVariable("REDISTOGO_URL");
 
     if (redisUrlString != null) {
-      logger.info("Using Redis To Go");
-      
+      logger.info("Setting config to Redis server " + redisUrlString);
+
       try {
         URL redisURL = new URL(redisUrlString);
         redis.putString("host", redisURL.getHost());
