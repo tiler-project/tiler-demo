@@ -64,6 +64,10 @@
     <maven.surefire.report.plugin.version>2.14</maven.surefire.report.plugin.version>
     <maven.javadoc.plugin.version>2.9</maven.javadoc.plugin.version>
     <maven.dependency.plugin.version>2.7</maven.dependency.plugin.version>
+
+    <!--Frontend versions-->
+    <node.version>v0.12.5</node.version>
+    <npm.version>2.5.1</npm.version>
   </properties>
 
   <dependencies>
@@ -312,49 +316,37 @@
         </executions>
       </plugin>
       <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>exec-maven-plugin</artifactId>
+        <groupId>com.github.eirslett</groupId>
+        <artifactId>frontend-maven-plugin</artifactId>
+        <version>0.0.23</version>
         <executions>
           <execution>
-            <id>exec-npm-install</id>
-            <phase>generate-sources</phase>
-            <configuration>
-              <executable>npm</executable>
-              <arguments>
-                <argument>install</argument>
-              </arguments>
-            </configuration>
+            <id>install-node-and-npm</id>
             <goals>
-              <goal>exec</goal>
+              <goal>install-node-and-npm</goal>
             </goals>
+            <configuration>
+              <nodeVersion>${node.version}</nodeVersion>
+              <npmVersion>${npm.version}</npmVersion>
+            </configuration>
           </execution>
           <execution>
-            <id>exec-npm-install-gulp</id>
-            <phase>generate-sources</phase>
-            <configuration>
-              <executable>npm</executable>
-              <arguments>
-                <argument>install</argument>
-                <argument>-g</argument>
-                <argument>gulp</argument>
-              </arguments>
-            </configuration>
+            <id>npm-install</id>
             <goals>
-              <goal>exec</goal>
+              <goal>npm</goal>
             </goals>
+            <configuration>
+              <arguments>install</arguments>
+            </configuration>
           </execution>
           <execution>
-            <id>exec-gulp-build</id>
-            <phase>process-resources</phase>
-            <configuration>
-              <executable>gulp</executable>
-              <arguments>
-                <argument>build</argument>
-              </arguments>
-            </configuration>
+            <id>gulp-build</id>
             <goals>
-              <goal>exec</goal>
+              <goal>gulp</goal>
             </goals>
+            <configuration>
+              <arguments>build</arguments>
+            </configuration>
           </execution>
         </executions>
       </plugin>

@@ -13,6 +13,8 @@ target/
 
 mods/
 
+node_tmp/
+node/
 node_modules/
 
 src/main/resources/static/
