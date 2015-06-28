@@ -77,10 +77,22 @@ public class MainVerticle extends Verticle {
         URI redisURL = new URI(redisURLString);
         redis.putString("host", redisURL.getHost());
         redis.putNumber("port", redisURL.getPort());
+        redis.putString("auth", getPasswordFromURI(redisURL));
       } catch (URISyntaxException e) {
         logger.error("Error parsing Redis URL", e);
       }
     }
+  }
+
+  private String getPasswordFromURI(URI uri) {
+    String userInfo = uri.getUserInfo();
+    int colonIndex = userInfo.indexOf(':');
+
+    if (colonIndex == -1) {
+      return null;
+    }
+
+    return userInfo.substring(colonIndex + 1);
   }
 
   private String getEnvironmentVariable(String name) {
