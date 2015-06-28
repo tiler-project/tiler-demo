@@ -7,8 +7,8 @@ import org.vertx.java.core.json.JsonObject;
 import org.vertx.java.core.logging.Logger;
 import org.vertx.java.platform.Verticle;
 
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Map;
 
 public class MainVerticle extends Verticle {
@@ -68,16 +68,16 @@ public class MainVerticle extends Verticle {
       return;
     }
 
-    String redisUrlString = getEnvironmentVariable("REDISTOGO_URL");
+    String redisURLString = getEnvironmentVariable("REDISTOGO_URL");
 
-    if (redisUrlString != null) {
-      logger.info("Setting config to Redis server " + redisUrlString);
+    if (redisURLString != null) {
+      logger.info("Setting config to Redis server " + redisURLString);
 
       try {
-        URL redisURL = new URL(redisUrlString);
+        URI redisURL = new URI(redisURLString);
         redis.putString("host", redisURL.getHost());
         redis.putNumber("port", redisURL.getPort());
-      } catch (MalformedURLException e) {
+      } catch (URISyntaxException e) {
         logger.error("Error parsing Redis URL", e);
       }
     }
