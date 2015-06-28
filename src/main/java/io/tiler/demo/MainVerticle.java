@@ -68,7 +68,7 @@ public class MainVerticle extends Verticle {
       return;
     }
 
-    String redisURLString = getEnvironmentVariable("REDISTOGO_URL");
+    String redisURLString = getEnvironmentVariable("REDIS_URL");
 
     if (redisURLString != null) {
       logger.info("Setting config to Redis server " + redisURLString);
