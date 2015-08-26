@@ -13,22 +13,23 @@ React.render(
   <Dashboard breakpoints={breakpoints} cols={cols} rowHeight={30}>
     <LineChartTile key={1} _grid={{x: 0, y: 0, w: 6, h: 20}}
       title={'Line Chart'}
-      query={{
-        metric: {label: {'name': {$replace: {$pattern: '(One)', $replacement: 'Hello $1'}}}},
-        point: {time: 'time', value: {value: '$mean'}},
-        from: 'examples.random-numbers',
-        where: {time: {$gte: {$minus: ['$now', '5m']}}, name: {$regex: {$pattern: '^One|Two|Three|Four$'}}},
-        group: ['name'],
-        aggregate: {time: {$intervals: {$size: '10s', $offset: {$minus: ['$now', '5m']}}}}
-      }} />
+      query={
+      'from examples.random-numbers\n' +
+      'where time >= (now() - 5m) and\n' +
+      'name ~= /^One|Two|Three|Four$/\n' +
+      'group name\n' +
+      'aggregate interval(time, now() - 5m, 10s) as time\n' +
+      'metric replace(name, /(One)/, "Hello $1") as label\n' +
+      'point time, mean(value) as value'
+      } />
     <NumberTile key={2} _grid={{x: 6, y: 0, w: 2, h: 6}}
-      query={{
-        point: {title: {name: '$last'}, value: {value: '$last'}},
-        from: 'examples.random-numbers',
-        where: {name: 'One'},
-        group: ['name'],
-        aggregate: {time: '$all'}
-      }}
+      query={
+      'from examples.random-numbers\n' +
+      'where name == "One"\n' +
+      'group name\n' +
+      'aggregate all() as all\n' +
+      'point last(name) as title, last(value) as value'
+      }
       suffix={'%'} />
     <ListTile key={3} _grid={{x: 6, y: 6, w: 2, h: 14}} title={'List'} ordered={false}
       bands={[
@@ -60,13 +61,13 @@ React.render(
           }
         }
       ]}
-      query={{
-        point: {label: {name: '$last'}, value: {value: '$last'}},
-        from: 'examples.random-numbers',
-        where: {name: {$regex: {$pattern: '^One|Two|Three|Four$'}}},
-        group: ['name'],
-        aggregate: {time: '$all'}
-      }} />
+      query={
+      'from examples.random-numbers\n' +
+      'where name ~= /^One|Two|Three|Four$/\n' +
+      'group name\n' +
+      'aggregate all() as all\n' +
+      'point last(name) as label, last(value) as value'
+      } />
   </Dashboard>,
   document.getElementById('content')
 );
