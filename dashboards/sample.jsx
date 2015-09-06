@@ -15,12 +15,14 @@ React.render(
       title={'Line Chart'}
       query={
       'from examples.random-numbers\n' +
-      'where time >= (now() - 5m) and\n' +
+      'where time >= (now() - 5m) &&\n' +
       'name ~= /^One|Two|Three|Four$/\n' +
       'group name\n' +
       'aggregate interval(time, now() - 5m, 10s) as time\n' +
       'metric replace(name, /(One)/, "Hello $1") as label\n' +
-      'point time, mean(value) as value'
+      'sort name desc\n' +
+      'point time, mean(value) as value\n' +
+      'sort time'
       } />
     <NumberTile key={2} _grid={{x: 6, y: 0, w: 2, h: 6}}
       query={
@@ -64,9 +66,9 @@ React.render(
       query={
       'from examples.random-numbers\n' +
       'where name ~= /^One|Two|Three|Four$/\n' +
-      'group name\n' +
-      'aggregate all() as all\n' +
-      'point last(name) as label, last(value) as value'
+      'aggregate name, all() as all\n' +
+      'point name as label, last(value) as value\n' +
+      'sort value desc'
       } />
   </Dashboard>,
   document.getElementById('content')
