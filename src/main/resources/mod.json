@@ -11,5 +11,5 @@
   "homepage": "url to your project page",
 
   "auto-redeploy": true,
-  "includes": "io.tiler~tiler~0.1.23"
+  "includes": "io.tiler~tiler~0.1.24"
 }
